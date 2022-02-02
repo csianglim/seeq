@@ -1,2 +1,47 @@
-# seeq
+# Seeq
 A cheatsheet for Seeq
+
+# Bulk load tags in Seeq Data Lab
+How to bulk load tags from SDL back into the workbench or export as CSV. `spy.push()` only displays 10 signals by default. See [https://www.seeq.org/index.php?/forums/topic/1105-increase-the-number-of-displayed-signals-from-10-when-spypush-is-used/](https://www.seeq.org/index.php?/forums/topic/1105-increase-the-number-of-displayed-signals-from-10-when-spypush-is-used/) for a workaround using `display_items`:
+
+```python
+from seeq import spy
+import pandas as pd
+my_items = pd.DataFrame({
+    'Name': [
+        'tag1',
+        'tag2',
+        'tag3'
+    ],
+    'Datasource Name': 'PI_SERVER_NAME'
+})
+
+items = spy.search(my_items)
+for i in my_items['Name']:
+    if i not in items['Name'].tolist():
+        print('TAG NOT FOUND: ', i)
+        
+df = spy.pull(items,
+         start='2022-01-24T02:00:00',
+         end='2022-01-26T14:00:00',
+         grid='1min')
+
+df.index = df.index.strftime("%m/%d/%Y %I:%M %p")    
+
+arrs = [items['Description'].values.tolist(), df.columns.tolist()]
+header = pd.MultiIndex.from_arrays(arrs,
+                                   names=['Description','Tag Name'])
+df2 = df
+df2.columns = header
+df2.to_csv('df.csv')
+
+# Push back to workbench
+push_results = spy.push(metadata=items)
+url = 'XXXX' # Pull the workbook. Use the URL of the Workbook where the signals where pushed 4# You can take it from the output of the above command
+wb = spy.workbooks.pull(url)[0]
+ws = wb.worksheets[0]
+ws.display_items = push_results # add all the pushed items to the worksheet
+
+# push the workbook with the modified worksheet back to Seeq
+spy.workbooks.push(wb)
+```
