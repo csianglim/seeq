@@ -1,6 +1,31 @@
 # Seeq
 A cheatsheet for Seeq
 
+# Capsule Properties
+
+```
+// Lab timer indicator condition
+$a = $clt.replace('On','1').toCondition().keep('Value', isEqualTo('1')).removeLongerThan(1month)
+
+// Lab load switch condition
+$b = $dlls.replace('On','1').toCondition().keep('Value', isEqualTo('1')).removeLongerThan(1month)
+
+// Sampled and loaded condition
+$c = $a.touches($b.beforestart(1min))
+
+// grab the lab and inferential predictions and calculate deltas as properties
+$d = $c
+.transform($capsule -> $capsule.setProperty('Uncorrected Inferential', $au.toScalars($capsule).first()))
+.transform($capsule -> $capsule.setProperty('Corrected Inferential', $a2c.toScalars($capsule).first()))
+.transform($capsule -> $capsule.setProperty('Lab', $blr.toScalars($capsule).last()))
+.transform($capsule -> $capsule.setProperty('Delta - Uncorrected',
+           $au.toScalars($capsule).first()-$blr.toScalars($capsule).last()))
+.transform($capsule -> $capsule.setProperty('Delta - Corrected',
+           $a2c.toScalars($capsule).first()-$blr.toScalars($capsule).last()))
+           
+return $d
+```
+
 # Bulk load tags in Seeq Data Lab
 How to bulk load tags from SDL back into the workbench or export as CSV. `spy.push()` only displays 10 signals by default. See [https://www.seeq.org/index.php?/forums/topic/1105-increase-the-number-of-displayed-signals-from-10-when-spypush-is-used/](https://www.seeq.org/index.php?/forums/topic/1105-increase-the-number-of-displayed-signals-from-10-when-spypush-is-used/) for a workaround using `display_items`:
 
