@@ -1,6 +1,38 @@
 # Seeq
 A cheatsheet for Seeq
 
+# How to install Latex in SDL without sudo
+
+Reference: https://www.tug.org/texlive/quickinstall.html
+
+```
+1.  cd /tmp # working directory of your choice
+2.  wget https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+3.  zcat install-tl-unx.tar.gz | tar xf -
+4.  cd install-tl-*
+5.  perl ./install-tl --scheme=basic --texdir=/home/datalab/tex # make the folder first
+6.  Finally, prepend /usr/local/texlive/YYYY/bin/PLATFORM to your PATH,  
+    e.g., /usr/local/texlive/2022/bin/x86_64-linux
+```
+Navigate to `/home/datalab/tex` then install these packages:
+
+```https://stackoverflow.com/questions/55746749/latex-equations-do-not-render-in-google-colaboratory-when-using-matplotlib
+1. ./tlmgr install collection-latexrecommended collection-fontsrecommended collection-fontsextra ec dvipng
+```
+
+Install `type1cm` manually for matplotlib to work. [Reference](https://stackoverflow.com/questions/55746749/latex-equations-do-not-render-in-google-colaboratory-when-using-matplotlib):
+
+```
+1. wget http://mirrors.ctan.org/macros/latex/contrib/type1cm.zip
+2. unzip type1cm.zip -d /tmp/type1cm
+3. Run ~/tex/bin/x86_64-linux/latex type1cm.ins
+4. mkdir ~/tex/texmf-dist/tex/latex/type1cm
+5. cp /tmp/type1cm/type1cm/type1cm.sty ~/tex/texmf-dist/tex/latex/type1cm
+6. Run ~/tex/bin/x86_64-linux/texhash
+```
+
+
+
 # Capsule Properties
 
 ```
