@@ -11,8 +11,6 @@ Reference: https://www.tug.org/texlive/quickinstall.html
 3.  zcat install-tl-unx.tar.gz | tar xf -
 4.  cd install-tl-*
 5.  perl ./install-tl --scheme=basic --texdir=/home/datalab/tex # make the folder first
-6.  Finally, prepend /usr/local/texlive/YYYY/bin/PLATFORM to your PATH,  
-    e.g., /usr/local/texlive/2022/bin/x86_64-linux
 ```
 Navigate to `/home/datalab/tex` then install these packages:
 
@@ -30,8 +28,12 @@ Install `type1cm` manually for matplotlib to work. [Reference](https://stackover
 5. cp /tmp/type1cm/type1cm/type1cm.sty ~/tex/texmf-dist/tex/latex/type1cm
 6. Run ~/tex/bin/x86_64-linux/texhash
 ```
-
-
+Finally, add tex to PATH in the notebook
+```
+import os
+os.environ["PATH"] += os.pathsep + "/home/datalab/tex/bin/x86_64-linux" # for latex
+print(os.environ['PATH'])
+```
 
 # Capsule Properties
 
