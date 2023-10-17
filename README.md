@@ -13,14 +13,14 @@ Reference: https://www.tug.org/texlive/quickinstall.html
 Navigate to `/home/datalab/tex` then install these packages:
 
 ```https://stackoverflow.com/questions/55746749/latex-equations-do-not-render-in-google-colaboratory-when-using-matplotlib
-1. ./tlmgr install collection-latexrecommended collection-fontsrecommended collection-fontsextra ec dvipng
+1. cd /home/datalab/tex/bin/x86_64-linux && ./tlmgr install collection-latexrecommended collection-fontsrecommended collection-fontsextra ec dvipng
 ```
 
 Install `type1cm` manually for matplotlib to work. [Reference](https://stackoverflow.com/questions/55746749/latex-equations-do-not-render-in-google-colaboratory-when-using-matplotlib):
 
 ```
 1. wget http://mirrors.ctan.org/macros/latex/contrib/type1cm.zip && unzip type1cm.zip -d /tmp/type1cm && mkdir ~/tex/texmf-dist/tex/latex/type1cm
-2. ~/tex/bin/x86_64-linux/latex type1cm.ins
+2. ~/tex/bin/x86_64-linux/latex /tmp/type1cm/type1cm/type1cm.ins
 3. cp /tmp/type1cm/type1cm/type1cm.sty ~/tex/texmf-dist/tex/latex/type1cm
 4. ~/tex/bin/x86_64-linux/texhash
 ```
